@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Hotel</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="nav-links">
+        <a href="/hospedes">Cadastrar/Ver Hóspedes</a> | 
+        <a href="/">Sair</a>
+    </div>
+
+    <h1>Painel Principal do Hotel</h1>
+
+    <main>
+        <h2>Quartos Disponíveis Atualmente</h2>
+        <% if(disponiveis.length === 0) { %>
+            <p style="color: red; font-weight: bold;">[ Esgotado - Nenhum quarto disponível ]</p>
+        <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Tipo</th>
+                        <th>Preço da Diária</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% disponiveis.forEach(q => { %>
+                        <tr>
+                            <td><%= q.numero %></td>
+                            <td><%= q.tipo %></td>
+                            <td>R$ <%= q.preco %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } %>
+    </main>
+
+    <main>
+        <h2>Cadastrar Novo Quarto</h2>
+        <form action="/quartos/novo" method="POST">
+            <input type="number" name="numero" placeholder="Número do Quarto" required>
+            <input type="text" name="tipo" placeholder="Tipo (Ex: Suíte, Casal, Solteiro)" required>
+            <input type="number" name="preco" placeholder="Preço" required>
+            <button type="submit">Adicionar Quarto</button>
+        </form>
+    </main>
+
+    <main>
+        <h2>Gerência Geral de Quartos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Status</th>
+                    <th>Hóspede Alocado</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% todosQuartos.forEach(q => { %>
+                    <tr>
+                        <td><%= q.numero %></td>
+                        <td><%= q.status %></td>
+                        <td><%= q.hospedeId ? q.hospedeId.nome : 'Nenhum' %></td>
+                        <td>
+                            <form action="/quartos/deletar/<%= q._id %>" method="POST" style="display:inline; box-shadow:none; padding:0;">
+                                <button type="submit" style="background-color: red; color: white;">Excluir</button>
+                            </form>
+
+                            <% if(q.status === 'Disponível') { %>
+                                <form action="/quartos/associar" method="POST" style="display:inline; box-shadow:none; padding:0;">
+                                    <input type="hidden" name="quartoId" value="<%= q._id %>">
+                                    <select name="hospedeId" required>
+                                        <option value="">Selecione um Hóspede...</option>
+                                        <% todosHospedes.forEach(h => { %>
+                                            <option value="<%= h._id %>"><%= h.nome %></option>
+                                        <% }) %>
+                                    </select>
+                                    <button type="submit" style="background-color: green; color: white;">Alocar Hóspede</button>
+                                </form>
+                            <% } else { %>
+                                <form action="/quartos/liberar/<%= q._id %>" method="POST" style="display:inline; box-shadow:none; padding:0;">
+                                    <button type="submit" style="background-color: orange; color: black;">Liberar Quarto</button>
+                                </form>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

@@ -1,0 +1,26 @@
+1. Como gerar a pasta node_modules
+A pasta node_modules nunca deve ser criada manualmente. Ela é gerada automaticamente pelo Node.js quando você instala as dependências do projeto.
+
+Abra o terminal (ou o prompt de comando) dentro da pasta raiz do seu projeto (onde vai ficar o seu arquivo server.js).
+
+Inicialize o projeto Node (caso ainda não tenha feito) para gerar o arquivo package.json:
+
+Bash
+npm init -y
+Instale os pacotes necessários para o código funcionar:
+
+Bash
+npm install express ejs mongoose
+O que acontece agora: O Node vai baixar o Express, o EJS e o Mongoose da internet e criará a pasta node_modules automaticamente com tudo dentro.
+
+2. Como criar as pastas public e views
+Essas pastas servem para organizar seus arquivos de design (CSS) e suas telas (EJS). Você pode criá-las diretamente pelo seu editor de código (como o VS Code)
+
+3. Onde colocar os arquivos dentro delas?
+Depois de criar as pastas, basta criar os arquivos correspondentes dentro de cada uma. A estrutura final deve ficar exatamente assim:
+
+Dentro da pasta public, crie um arquivo chamado style.css e cole o código CSS.
+
+Dentro da pasta views, crie os arquivos de texto com a extensão .ejs (ex: projects.ejs, login.ejs, cadastro.ejs, quartos.ejs, hospedes.ejs) e cole o código HTML/EJS de cada um deles ali.
+
+O seu arquivo server.js deve ficar do lado de fora dessas pastas, na raiz do projeto.

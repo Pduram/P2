@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciamento de Hóspedes</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="nav-links">
+        <a href="/quartos">Gerenciar Quartos</a> | 
+        <a href="/">Sair</a>
+    </div>
+
+    <main>
+        <h2>Cadastrar Novo Hóspede</h2>
+        <form action="/hospedes/novo" method="POST">
+            <input type="text" name="nome" placeholder="Nome do Hóspede" required>
+            <input type="text" name="cpf" placeholder="CPF" required>
+            <button type="submit">Cadastrar Hóspede</button>
+        </form>
+
+        <h2>Lista de Hóspedes Cadastrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% hospedes.forEach(h => { %>
+                    <tr>
+                        <td><%= h.nome %></td>
+                        <td><%= h.cpf %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
